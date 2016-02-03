@@ -13,6 +13,12 @@
 		D41928DC1C6275A70061477D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D41928DA1C6275A70061477D /* Main.storyboard */; };
 		D41928DE1C6275A70061477D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D41928DD1C6275A70061477D /* Assets.xcassets */; };
 		D41928E11C6275A70061477D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D41928DF1C6275A70061477D /* LaunchScreen.storyboard */; };
+		D41928EA1C62784C0061477D /* OpenGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41928E91C62784C0061477D /* OpenGLView.m */; };
+		D41928F21C6278A30061477D /* GLESUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D41928ED1C6278A30061477D /* GLESUtils.m */; };
+		D41928F31C6278A30061477D /* ksMatrix.c in Sources */ = {isa = PBXBuildFile; fileRef = D41928EE1C6278A30061477D /* ksMatrix.c */; };
+		D41928F41C6278A30061477D /* ksVector.c in Sources */ = {isa = PBXBuildFile; fileRef = D41928F01C6278A30061477D /* ksVector.c */; };
+		D41928F71C627DB00061477D /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D41928F51C627DB00061477D /* FragmentShader.glsl */; };
+		D41928F81C627DB00061477D /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D41928F61C627DB00061477D /* VertexShader.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,16 @@
 		D41928DD1C6275A70061477D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D41928E01C6275A70061477D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D41928E21C6275A70061477D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D41928E81C62784C0061477D /* OpenGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLView.h; sourceTree = "<group>"; };
+		D41928E91C62784C0061477D /* OpenGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenGLView.m; sourceTree = "<group>"; };
+		D41928EC1C6278A30061477D /* GLESUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLESUtils.h; sourceTree = "<group>"; };
+		D41928ED1C6278A30061477D /* GLESUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLESUtils.m; sourceTree = "<group>"; };
+		D41928EE1C6278A30061477D /* ksMatrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ksMatrix.c; sourceTree = "<group>"; };
+		D41928EF1C6278A30061477D /* ksMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ksMatrix.h; sourceTree = "<group>"; };
+		D41928F01C6278A30061477D /* ksVector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ksVector.c; sourceTree = "<group>"; };
+		D41928F11C6278A30061477D /* ksVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ksVector.h; sourceTree = "<group>"; };
+		D41928F51C627DB00061477D /* FragmentShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
+		D41928F61C627DB00061477D /* VertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,9 +79,13 @@
 				D41928D71C6275A70061477D /* ViewController.h */,
 				D41928D81C6275A70061477D /* ViewController.m */,
 				D41928DA1C6275A70061477D /* Main.storyboard */,
+				D41928E81C62784C0061477D /* OpenGLView.h */,
+				D41928E91C62784C0061477D /* OpenGLView.m */,
 				D41928DD1C6275A70061477D /* Assets.xcassets */,
 				D41928DF1C6275A70061477D /* LaunchScreen.storyboard */,
 				D41928E21C6275A70061477D /* Info.plist */,
+				D41928F91C627DB40061477D /* Shaders */,
+				D41928EB1C6278A30061477D /* Utils */,
 				D41928D11C6275A70061477D /* Supporting Files */,
 			);
 			path = Cubes;
@@ -77,6 +97,28 @@
 				D41928D21C6275A70061477D /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D41928EB1C6278A30061477D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D41928EC1C6278A30061477D /* GLESUtils.h */,
+				D41928ED1C6278A30061477D /* GLESUtils.m */,
+				D41928EE1C6278A30061477D /* ksMatrix.c */,
+				D41928EF1C6278A30061477D /* ksMatrix.h */,
+				D41928F01C6278A30061477D /* ksVector.c */,
+				D41928F11C6278A30061477D /* ksVector.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D41928F91C627DB40061477D /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				D41928F51C627DB00061477D /* FragmentShader.glsl */,
+				D41928F61C627DB00061477D /* VertexShader.glsl */,
+			);
+			name = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +152,7 @@
 				TargetAttributes = {
 					D41928CD1C6275A70061477D = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = V5ZV7HDDJC;
 					};
 				};
 			};
@@ -138,6 +181,8 @@
 			files = (
 				D41928E11C6275A70061477D /* LaunchScreen.storyboard in Resources */,
 				D41928DE1C6275A70061477D /* Assets.xcassets in Resources */,
+				D41928F81C627DB00061477D /* VertexShader.glsl in Resources */,
+				D41928F71C627DB00061477D /* FragmentShader.glsl in Resources */,
 				D41928DC1C6275A70061477D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +196,11 @@
 			files = (
 				D41928D91C6275A70061477D /* ViewController.m in Sources */,
 				D41928D61C6275A70061477D /* AppDelegate.m in Sources */,
+				D41928F31C6278A30061477D /* ksMatrix.c in Sources */,
+				D41928F21C6278A30061477D /* GLESUtils.m in Sources */,
 				D41928D31C6275A70061477D /* main.m in Sources */,
+				D41928F41C6278A30061477D /* ksVector.c in Sources */,
+				D41928EA1C62784C0061477D /* OpenGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +310,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Cubes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robeberhardt.Cubes;
@@ -272,6 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Cubes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = robeberhardt.Cubes;
@@ -298,6 +349,7 @@
 				D41928E71C6275A70061477D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
