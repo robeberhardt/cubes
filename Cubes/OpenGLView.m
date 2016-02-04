@@ -103,13 +103,11 @@
 -(void)setupProjection
 {
     float aspectRatio = self.frame.size.width / self.frame.size.height;
-//    float aspectRatio = 1;
     ksMatrixLoadIdentity(&_projectionMatrix);
     ksPerspective(&_projectionMatrix, 110.0, aspectRatio, 1.0f, 10.0f);
     
     ksMatrixTranslate(&_projectionMatrix, 10.0, 0.0, 0.0);
     ksMatrixScale(&_projectionMatrix, 4.0, 1.0, 1.0);
-
     
     glUniformMatrix4fv(_projectionSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
     glEnable(GL_CULL_FACE);

@@ -9,7 +9,7 @@
 #import "ParticleManager.h"
 #import "Particle.h"
 
-#define MAX_PARTICLE_COUNT 1000
+#define MAX_PARTICLE_COUNT 2000
 #define MAX_AGE 200
 
 #define ARC4RANDOM_MAX      0x100000000
