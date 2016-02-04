@@ -11,7 +11,7 @@
 
 @implementation OpenGLView
 {
-    float _rotateColorCube;
+    float _rotateCube;
     CADisplayLink * _displayLink;
 }
 
@@ -32,7 +32,10 @@
         [self setupContext];
         [self setupProgram];
         [self setupProjection];
-        
+        [self setupBuffers];
+        [self setupTransform];
+        [self render];
+        [self toggleDisplayLink];
     }
     
     return self;
@@ -40,13 +43,15 @@
 
 -(void)layoutSubviews
 {
-    [EAGLContext setCurrentContext:_context];
-    glUseProgram(_programHandle);
-    
-    [self teardownBuffers];
-    [self setupBuffers];
-    [self setupTransform];
-    [self render];
+//    NSLog(@"layout Subviews...");
+//    [EAGLContext setCurrentContext:_context];
+//    glUseProgram(_programHandle);
+//    
+//    [self teardownBuffers];
+//    [self setupBuffers];
+//    [self setupTransform];
+//    [self render];
+//    [self toggleDisplayLink];
 }
 
 
@@ -141,6 +146,7 @@
 
 -(void)setupTransform
 {
+    NSLog(@"setup transform");
     ksMatrixLoadIdentity(&_modelViewMatrix);
     ksMatrixTranslate(&_modelViewMatrix, -0.5, 0.0, -5.5);
     ksMatrixRotate(&_modelViewMatrix, 0.0, 0.0, 0.0, 0.0);
@@ -151,9 +157,12 @@
 
 -(void)updateTransform
 {
+//    NSLog(@"%f", _rotateCube);
     ksMatrixLoadIdentity(&_cubeModelViewMatrix);
-    ksMatrixTranslate(&_cubeModelViewMatrix, -0.5, 0.0, -5.5);
-    ksMatrixRotate(&_cubeModelViewMatrix, 15.0, 0.0, 0.0, 1.0);
+    ksMatrixTranslate(&_cubeModelViewMatrix, -0.0, -0.0, -5.5);
+//    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 0.0, 0.0);
+    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 0.0, 0.0);
+    ksMatrixTranslate(&_cubeModelViewMatrix, 0.5, 0.5, 0);
     
     ksMatrixCopy(&_modelViewMatrix, &_cubeModelViewMatrix);
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
@@ -181,18 +190,6 @@
     
     glDeleteFramebuffers(1, &_frameBuffer);
     _frameBuffer = 0;
-}
-
-- (void) updateColorCubeTransform
-{
-    ksMatrixLoadIdentity(&_modelViewMatrix);
-    
-    ksMatrixTranslate(&_modelViewMatrix, 0.0, -2, -5.5);
-    
-    ksMatrixRotate(&_modelViewMatrix, _rotateColorCube, 0.0, 1.0, 0.0);
-    
-    // Load the model-view matrix
-    glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat*)&_modelViewMatrix.m[0][0]);
 }
 
 - (void) drawColorCube
@@ -249,22 +246,17 @@
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     
-//    [self updateColorCubeTransform];
-//    [self drawColorCube];
-    
     [self updateTransform];
     
     ksColor whiteColor = {1, 1, 1, 1};
-    ksColor redColor = {1, 0, 0, 1};
-    [self drawCube:redColor];
-    
+    [self drawCube:whiteColor];
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
 -(void)toggleDisplayLink
 {
-    if (_displayLink != nil)
+    if (_displayLink == nil)
     {
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCallback:)];
         [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
@@ -277,8 +269,10 @@
 
 -(void)displayLinkCallback:(CADisplayLink *)displayLink
 {
+    _rotateCube += displayLink.duration * 240;
+//    NSLog(@"%f", _rotateCube);
     // do stuff
-    [self updateTransform];
+    
     [self render];
 }
 
