@@ -61,6 +61,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D41584CD1C637D890054C669 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				D4688D801C62ED5D00C55030 /* ParticleManager.h */,
+				D4688D811C62ED5D00C55030 /* ParticleManager.m */,
+				D4688D831C62FC0A00C55030 /* Particle.h */,
+				D4688D841C62FC0A00C55030 /* Particle.m */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
 		D41928C51C6275A70061477D = {
 			isa = PBXGroup;
 			children = (
@@ -80,10 +91,6 @@
 		D41928D01C6275A70061477D /* Cubes */ = {
 			isa = PBXGroup;
 			children = (
-				D4688D801C62ED5D00C55030 /* ParticleManager.h */,
-				D4688D811C62ED5D00C55030 /* ParticleManager.m */,
-				D4688D831C62FC0A00C55030 /* Particle.h */,
-				D4688D841C62FC0A00C55030 /* Particle.m */,
 				D41928D41C6275A70061477D /* AppDelegate.h */,
 				D41928D51C6275A70061477D /* AppDelegate.m */,
 				D41928D71C6275A70061477D /* ViewController.h */,
@@ -94,6 +101,7 @@
 				D41928DD1C6275A70061477D /* Assets.xcassets */,
 				D41928DF1C6275A70061477D /* LaunchScreen.storyboard */,
 				D41928E21C6275A70061477D /* Info.plist */,
+				D41584CD1C637D890054C669 /* Particles */,
 				D41928F91C627DB40061477D /* Shaders */,
 				D41928EB1C6278A30061477D /* Utils */,
 				D41928D11C6275A70061477D /* Supporting Files */,
