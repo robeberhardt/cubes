@@ -29,7 +29,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        
+        self.currentCount = 500;
     }
     return self;
 }

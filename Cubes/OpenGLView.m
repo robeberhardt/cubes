@@ -204,30 +204,29 @@
     glClear(GL_COLOR_BUFFER_BIT);
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+    
+    for (int i=0; i < [ParticleManager sharedInstance].currentCount; i++)
+    {
+        Particle *p = [ParticleManager sharedInstance].particles[i];
+        ksColor pColor = { p.pColor.x, p.pColor.y, p.pColor.z, 1.0 };
 
-    
-    [[ParticleManager sharedInstance].particles enumerateObjectsUsingBlock:^(id particle, NSUInteger idx, BOOL *stop)
-     {
-         Particle *p = (Particle *)particle;
-         ksColor pColor = { p.pColor.x, p.pColor.y, p.pColor.z, 1.0 };
-         
-         ksMatrix4 pMat = p.pModelMatrix;
-         ksMatrixLoadIdentity(&pMat);
-         ksMatrixTranslate(&pMat, p.pPosition.x, p.pPosition.y, p.pPosition.z);
-         
-         // handle rotations
-         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.x, 1.0, 0.0, 0.0);
-         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.y, 0.0, 1.0, 0.0);
-         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.z, 0.0, 0.0, 1.0);
-         
-         ksMatrixScale(&pMat, p.pScale, p.pScale, p.pScale);
-         ksMatrixCopy(&_modelViewMatrix, &pMat);
-         ksMatrixTranslate(&_modelViewMatrix, 15.0, 5.0, -5.5);
-         glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
-         
-         [self drawCube:pColor];
-     }];
-    
+        ksMatrix4 pMat = p.pModelMatrix;
+        ksMatrixLoadIdentity(&pMat);
+        ksMatrixTranslate(&pMat, p.pPosition.x, p.pPosition.y, p.pPosition.z);
+
+        // handle rotations
+        ksMatrixRotate(&pMat, _rotateCube * p.pRotation.x, 1.0, 0.0, 0.0);
+        ksMatrixRotate(&pMat, _rotateCube * p.pRotation.y, 0.0, 1.0, 0.0);
+        ksMatrixRotate(&pMat, _rotateCube * p.pRotation.z, 0.0, 0.0, 1.0);
+
+        ksMatrixScale(&pMat, p.pScale, p.pScale, p.pScale);
+        ksMatrixCopy(&_modelViewMatrix, &pMat);
+        ksMatrixTranslate(&_modelViewMatrix, 15.0, 5.0, -5.5);
+        glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+
+        [self drawCube:pColor];
+
+    }
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }

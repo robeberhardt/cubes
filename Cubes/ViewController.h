@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet UISlider *countSlider;
+@property (nonatomic, strong) IBOutlet UILabel *countLabel;
+
 - (IBAction) OnSliderChanged:(id)sender;
 
 @end

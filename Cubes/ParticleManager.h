@@ -18,6 +18,7 @@
 @interface ParticleManager : NSObject
 @property (nonatomic) NSMutableArray *particles;
 @property (nonatomic, weak) id <ParticleManagerDelegate> delegate;
+@property int currentCount;
 + (ParticleManager *)sharedInstance;
 
 -(void)setup;
