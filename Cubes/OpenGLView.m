@@ -8,8 +8,10 @@
 
 #import "OpenGLView.h"
 #import "GLESUtils.h"
+#import "ParticleManager.h"
+#import "Particle.h"
 
-@implementation OpenGLView
+@implementation OpenGLView 
 {
     float _rotateCube;
     CADisplayLink * _displayLink;
@@ -25,8 +27,8 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         
-//        self.layer.borderColor = [UIColor redColor].CGColor;
-//        self.layer.borderWidth = 5.0f;
+        self.layer.borderColor = [UIColor redColor].CGColor;
+        self.layer.borderWidth = 4.0;
         
         [self setupLayer];
         [self setupContext];
@@ -34,26 +36,20 @@
         [self setupProjection];
         [self setupBuffers];
         [self setupTransform];
-        [self render];
-        [self toggleDisplayLink];
+        
+        [ParticleManager sharedInstance].delegate = self;
+        [[ParticleManager sharedInstance] setup];
     }
     
     return self;
 }
 
--(void)layoutSubviews
+-(void)particlesInitialized
 {
-//    NSLog(@"layout Subviews...");
-//    [EAGLContext setCurrentContext:_context];
-//    glUseProgram(_programHandle);
-//    
-//    [self teardownBuffers];
-//    [self setupBuffers];
-//    [self setupTransform];
-//    [self render];
-//    [self toggleDisplayLink];
+    NSLog(@"particles initialized");
+    
+    [self toggleDisplayLink];
 }
-
 
 -(void) setupLayer
 {
@@ -106,10 +102,14 @@
 
 -(void)setupProjection
 {
-//    float aspectRatio = self.frame.size.width / self.frame.size.height;
-    float aspectRatio = .75;
+    float aspectRatio = self.frame.size.width / self.frame.size.height;
+//    float aspectRatio = 1;
     ksMatrixLoadIdentity(&_projectionMatrix);
     ksPerspective(&_projectionMatrix, 110.0, aspectRatio, 1.0f, 10.0f);
+    
+    ksMatrixTranslate(&_projectionMatrix, 10.0, 0.0, 0.0);
+    ksMatrixScale(&_projectionMatrix, 4.0, 1.0, 1.0);
+
     
     glUniformMatrix4fv(_projectionSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
     glEnable(GL_CULL_FACE);
@@ -149,27 +149,16 @@
     NSLog(@"setup transform");
     ksMatrixLoadIdentity(&_modelViewMatrix);
     ksMatrixTranslate(&_modelViewMatrix, -0.0, 0.0, -5.5);
-//    ksMatrixRotate(&_modelViewMatrix, 0.0, 0.0, 0.0, 0.0);
-//    ksMatrixScale(&_modelViewMatrix, 1.0, 1.0, 1.0);
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat*)&_modelViewMatrix.m[0][0]);
 
 }
 
 -(void)updateTransform
 {
-//    NSLog(@"%f", _rotateCube);
     ksMatrixLoadIdentity(&_cubeModelViewMatrix);
     ksMatrixTranslate(&_cubeModelViewMatrix, 0.0, 0.0, -5.5);
-//    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 0.0, 0.0);
     ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 1.0, 0.0);
-//    ksMatrixTranslate(&_cubeModelViewMatrix, 0.5, 0.5, 0);
-    
     ksMatrixCopy(&_modelViewMatrix, &_cubeModelViewMatrix);
-    
-   
-    
-
-    
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
 }
 
@@ -178,9 +167,7 @@
     ksMatrixLoadIdentity(&_cube2ModelViewMatrix);
     ksMatrixTranslate(&_cube2ModelViewMatrix, 1.0, -1.0, -5.5);
     ksMatrixRotate(&_cube2ModelViewMatrix, _rotateCube, 0.0, 1.0, 1.0);
-    
     ksMatrixCopy(&_modelViewMatrix, &_cube2ModelViewMatrix);
-    
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
 }
 
@@ -208,48 +195,6 @@
     _frameBuffer = 0;
 }
 
-- (void) drawColorCube
-{
-    GLfloat vertices[] = {
-        -0.5f, -0.5f, 0.5f, 1.0, 0.0, 0.0, 1.0,     // red
-        -0.5f, 0.5f, 0.5f, 1.0, 1.0, 0.0, 1.0,      // yellow
-        0.5f, 0.5f, 0.5f, 0.0, 0.0, 1.0, 1.0,       // blue
-        0.5f, -0.5f, 0.5f, 1.0, 1.0, 1.0, 1.0,      // white
-        
-        0.5f, -0.5f, -0.5f, 1.0, 1.0, 0.0, 1.0,     // yellow
-        0.5f, 0.5f, -0.5f, 1.0, 0.0, 0.0, 1.0,      // red
-        -0.5f, 0.5f, -0.5f, 1.0, 1.0, 1.0, 1.0,     // white
-        -0.5f, -0.5f, -0.5f, 0.0, 0.0, 1.0, 1.0,    // blue
-    };
-    
-    GLubyte indices[] = {
-        // Front face
-        0, 3, 2, 0, 2, 1,
-        
-        // Back face
-        7, 5, 4, 7, 6, 5,
-        
-        // Left face
-        0, 1, 6, 0, 6, 7,
-        
-        // Right face
-        3, 4, 5, 3, 5, 2,
-        
-        // Up face
-        1, 2, 5, 1, 5, 6,
-        
-        // Down face
-        0, 7, 4, 0, 4, 3
-    };
-    
-    glVertexAttribPointer(_positionSlot, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), vertices);
-    glVertexAttribPointer(_colorSlot, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), vertices + 3);
-    glEnableVertexAttribArray(_positionSlot);
-    glEnableVertexAttribArray(_colorSlot);
-    glDrawElements(GL_TRIANGLES, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, indices);
-    glDisableVertexAttribArray(_colorSlot);
-}
-
 -(void)render
 {
     if (_context == nil)
@@ -257,19 +202,33 @@
         return;
     }
     
-    ksColor whiteColor = {1, 1, 1, 1};
-    ksColor redColor = {1, 0, 0, 1};
-    
-    glClearColor(0.0, 0.0, 0.4, 1.0);
+    glClearColor(0.0, 0.0, 0.3, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
+
     
-    [self updateTransform];
-    [self drawCube:whiteColor];
-    
-    [self updateOtherTransform];
-    [self drawCube:redColor];
+    [[ParticleManager sharedInstance].particles enumerateObjectsUsingBlock:^(id particle, NSUInteger idx, BOOL *stop)
+     {
+         Particle *p = (Particle *)particle;
+         ksColor pColor = { p.pColor.x, p.pColor.y, p.pColor.z, 1.0 };
+         
+         ksMatrix4 pMat = p.pModelMatrix;
+         ksMatrixLoadIdentity(&pMat);
+         ksMatrixTranslate(&pMat, p.pPosition.x, p.pPosition.y, p.pPosition.z);
+         
+         // handle rotations
+         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.x, 1.0, 0.0, 0.0);
+         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.y, 0.0, 1.0, 0.0);
+         ksMatrixRotate(&pMat, _rotateCube * p.pRotation.z, 0.0, 0.0, 1.0);
+         
+         ksMatrixScale(&pMat, p.pScale, p.pScale, p.pScale);
+         ksMatrixCopy(&_modelViewMatrix, &pMat);
+         ksMatrixTranslate(&_modelViewMatrix, 15.0, 5.0, -5.5);
+         glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+         
+         [self drawCube:pColor];
+     }];
     
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
@@ -291,8 +250,6 @@
 -(void)displayLinkCallback:(CADisplayLink *)displayLink
 {
     _rotateCube += displayLink.duration * 50;
-//    NSLog(@"%f", _rotateCube);
-    // do stuff
     
     [self render];
 }

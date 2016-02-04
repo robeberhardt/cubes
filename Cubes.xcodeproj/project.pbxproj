@@ -19,6 +19,8 @@
 		D41928F41C6278A30061477D /* ksVector.c in Sources */ = {isa = PBXBuildFile; fileRef = D41928F01C6278A30061477D /* ksVector.c */; };
 		D41928F71C627DB00061477D /* FragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D41928F51C627DB00061477D /* FragmentShader.glsl */; };
 		D41928F81C627DB00061477D /* VertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = D41928F61C627DB00061477D /* VertexShader.glsl */; };
+		D4688D821C62ED5D00C55030 /* ParticleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D4688D811C62ED5D00C55030 /* ParticleManager.m */; };
+		D4688D851C62FC0A00C55030 /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = D4688D841C62FC0A00C55030 /* Particle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,10 @@
 		D41928F11C6278A30061477D /* ksVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ksVector.h; sourceTree = "<group>"; };
 		D41928F51C627DB00061477D /* FragmentShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FragmentShader.glsl; sourceTree = "<group>"; };
 		D41928F61C627DB00061477D /* VertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VertexShader.glsl; sourceTree = "<group>"; };
+		D4688D801C62ED5D00C55030 /* ParticleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleManager.h; sourceTree = "<group>"; };
+		D4688D811C62ED5D00C55030 /* ParticleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleManager.m; sourceTree = "<group>"; };
+		D4688D831C62FC0A00C55030 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = Cubes/Particle.h; sourceTree = SOURCE_ROOT; };
+		D4688D841C62FC0A00C55030 /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Particle.m; path = Cubes/Particle.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,10 @@
 		D41928D01C6275A70061477D /* Cubes */ = {
 			isa = PBXGroup;
 			children = (
+				D4688D801C62ED5D00C55030 /* ParticleManager.h */,
+				D4688D811C62ED5D00C55030 /* ParticleManager.m */,
+				D4688D831C62FC0A00C55030 /* Particle.h */,
+				D4688D841C62FC0A00C55030 /* Particle.m */,
 				D41928D41C6275A70061477D /* AppDelegate.h */,
 				D41928D51C6275A70061477D /* AppDelegate.m */,
 				D41928D71C6275A70061477D /* ViewController.h */,
@@ -197,7 +207,9 @@
 				D41928D91C6275A70061477D /* ViewController.m in Sources */,
 				D41928D61C6275A70061477D /* AppDelegate.m in Sources */,
 				D41928F31C6278A30061477D /* ksMatrix.c in Sources */,
+				D4688D821C62ED5D00C55030 /* ParticleManager.m in Sources */,
 				D41928F21C6278A30061477D /* GLESUtils.m in Sources */,
+				D4688D851C62FC0A00C55030 /* Particle.m in Sources */,
 				D41928D31C6275A70061477D /* main.m in Sources */,
 				D41928F41C6278A30061477D /* ksVector.c in Sources */,
 				D41928EA1C62784C0061477D /* OpenGLView.m in Sources */,
