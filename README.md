@@ -12,7 +12,7 @@
 #### known issues
 I wasn't able to fix the viewport clipping, need to dig some more into the relationship between the OpenGL layer, viewport and the projection matrix, I think
 
-maintaining 60fps until we get > 5000 cubes, I'm sure there is much to learn about optimizing the pipeline
+on my iPhone 6S+, maintaining 60fps until we get > 5000 cubes
 
 #### third-party code
 everything in the Utils group (matrix and vector structs, math helpers, shader loader)
