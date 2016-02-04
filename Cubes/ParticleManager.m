@@ -9,7 +9,7 @@
 #import "ParticleManager.h"
 #import "Particle.h"
 
-#define MAX_PARTICLE_COUNT 2000
+#define MAX_PARTICLE_COUNT 10000
 #define MAX_AGE 200
 
 #define ARC4RANDOM_MAX      0x100000000
@@ -40,7 +40,7 @@
     _particles = [[NSMutableArray alloc] initWithCapacity:MAX_PARTICLE_COUNT];
     for (int i = 0; i < MAX_PARTICLE_COUNT; i++)
     {
-        NSLog(@"creating particle %d", i);
+//        NSLog(@"creating particle %d", i);
         ksVec3 pos, rot;
         ksVec4 col;
         pos.x = [self randomParticleValue] * 10 - 5;

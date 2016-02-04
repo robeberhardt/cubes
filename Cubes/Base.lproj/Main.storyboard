@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -20,12 +21,46 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hc7-ga-yxF" userLabel="OpenGL View" customClass="OpenGLView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZoY-mN-boW" userLabel="Controls View">
+                                <rect key="frame" x="0.0" y="506" width="600" height="94"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="500" minValue="10" maxValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="cc0-QD-94g">
+                                        <rect key="frame" x="89.5" y="32" width="304" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAg-KG-KyQ">
+                                        <rect key="frame" x="29" y="36" width="46.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zb9-Ts-byL">
+                                        <rect key="frame" x="399" y="36" width="46.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.22337655141843971" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="dAg-KG-KyQ" firstAttribute="leading" secondItem="ZoY-mN-boW" secondAttribute="leading" constant="29" id="2Pq-dC-x0x"/>
+                                    <constraint firstItem="cc0-QD-94g" firstAttribute="leading" secondItem="dAg-KG-KyQ" secondAttribute="trailing" constant="16" id="4ZW-yN-C96"/>
+                                    <constraint firstItem="zb9-Ts-byL" firstAttribute="centerY" secondItem="ZoY-mN-boW" secondAttribute="centerY" id="Fs8-Iv-bwV"/>
+                                    <constraint firstAttribute="height" constant="94" id="MtQ-lk-uoj"/>
+                                    <constraint firstItem="dAg-KG-KyQ" firstAttribute="centerY" secondItem="ZoY-mN-boW" secondAttribute="centerY" id="SEl-1K-whX"/>
+                                    <constraint firstItem="cc0-QD-94g" firstAttribute="width" secondItem="ZoY-mN-boW" secondAttribute="width" multiplier="0.5" id="f28-6x-SwY"/>
+                                    <constraint firstItem="zb9-Ts-byL" firstAttribute="leading" secondItem="cc0-QD-94g" secondAttribute="trailing" constant="8" id="frO-0H-cwj"/>
+                                    <constraint firstAttribute="bottom" secondItem="cc0-QD-94g" secondAttribute="bottom" constant="32" id="i3X-v3-Ehm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hc7-ga-yxF" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4WT-0t-l2C"/>
+                            <constraint firstItem="ZoY-mN-boW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Bka-fg-oxp"/>
+                            <constraint firstItem="ZoY-mN-boW" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="a18-Ua-dyY"/>
                             <constraint firstAttribute="trailing" secondItem="hc7-ga-yxF" secondAttribute="trailing" id="adz-JM-9HG"/>
                             <constraint firstItem="hc7-ga-yxF" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="iUL-A4-S7O"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZoY-mN-boW" secondAttribute="bottom" id="t7Q-hv-mJR"/>
                             <constraint firstItem="hc7-ga-yxF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tiy-4o-gck"/>
                         </constraints>
                     </view>

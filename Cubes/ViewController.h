@@ -10,6 +10,7 @@
 
 @interface ViewController : UIViewController
 
+- (IBAction) OnSliderChanged:(id)sender;
 
 @end
 
