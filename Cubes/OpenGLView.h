@@ -29,6 +29,7 @@
     ksMatrix4 _projectionMatrix;
     
     ksMatrix4 _cubeModelViewMatrix;
+    ksMatrix4 _cube2ModelViewMatrix;
 }
 
 @property (nonatomic, assign) int cubeCount;

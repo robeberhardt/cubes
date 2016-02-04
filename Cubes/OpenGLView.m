@@ -109,7 +109,7 @@
 //    float aspectRatio = self.frame.size.width / self.frame.size.height;
     float aspectRatio = .75;
     ksMatrixLoadIdentity(&_projectionMatrix);
-    ksPerspective(&_projectionMatrix, 120.0, aspectRatio, 1.0f, 20.0f);
+    ksPerspective(&_projectionMatrix, 110.0, aspectRatio, 1.0f, 10.0f);
     
     glUniformMatrix4fv(_projectionSlot, 1, GL_FALSE, (GLfloat *)&_projectionMatrix.m[0][0]);
     glEnable(GL_CULL_FACE);
@@ -148,9 +148,9 @@
 {
     NSLog(@"setup transform");
     ksMatrixLoadIdentity(&_modelViewMatrix);
-    ksMatrixTranslate(&_modelViewMatrix, -0.5, 0.0, -5.5);
-    ksMatrixRotate(&_modelViewMatrix, 0.0, 0.0, 0.0, 0.0);
-    ksMatrixScale(&_modelViewMatrix, 1.0, 1.0, 1.0);
+    ksMatrixTranslate(&_modelViewMatrix, -0.0, 0.0, -5.5);
+//    ksMatrixRotate(&_modelViewMatrix, 0.0, 0.0, 0.0, 0.0);
+//    ksMatrixScale(&_modelViewMatrix, 1.0, 1.0, 1.0);
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat*)&_modelViewMatrix.m[0][0]);
 
 }
@@ -159,12 +159,28 @@
 {
 //    NSLog(@"%f", _rotateCube);
     ksMatrixLoadIdentity(&_cubeModelViewMatrix);
-    ksMatrixTranslate(&_cubeModelViewMatrix, -0.0, -0.0, -5.5);
+    ksMatrixTranslate(&_cubeModelViewMatrix, 0.0, 0.0, -5.5);
 //    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 0.0, 0.0);
-    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 0.0, 0.0);
-    ksMatrixTranslate(&_cubeModelViewMatrix, 0.5, 0.5, 0);
+    ksMatrixRotate(&_cubeModelViewMatrix, _rotateCube, 1.0, 1.0, 0.0);
+//    ksMatrixTranslate(&_cubeModelViewMatrix, 0.5, 0.5, 0);
     
     ksMatrixCopy(&_modelViewMatrix, &_cubeModelViewMatrix);
+    
+   
+    
+
+    
+    glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
+}
+
+-(void)updateOtherTransform
+{
+    ksMatrixLoadIdentity(&_cube2ModelViewMatrix);
+    ksMatrixTranslate(&_cube2ModelViewMatrix, 1.0, -1.0, -5.5);
+    ksMatrixRotate(&_cube2ModelViewMatrix, _rotateCube, 0.0, 1.0, 1.0);
+    
+    ksMatrixCopy(&_modelViewMatrix, &_cube2ModelViewMatrix);
+    
     glUniformMatrix4fv(_modelViewSlot, 1, GL_FALSE, (GLfloat *)&_modelViewMatrix.m[0][0]);
 }
 
@@ -241,15 +257,20 @@
         return;
     }
     
+    ksColor whiteColor = {1, 1, 1, 1};
+    ksColor redColor = {1, 0, 0, 1};
+    
     glClearColor(0.0, 0.0, 0.4, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
     glViewport(0, 0, self.frame.size.width, self.frame.size.height);
     
     [self updateTransform];
-    
-    ksColor whiteColor = {1, 1, 1, 1};
     [self drawCube:whiteColor];
+    
+    [self updateOtherTransform];
+    [self drawCube:redColor];
+    
     
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
@@ -269,7 +290,7 @@
 
 -(void)displayLinkCallback:(CADisplayLink *)displayLink
 {
-    _rotateCube += displayLink.duration * 240;
+    _rotateCube += displayLink.duration * 50;
 //    NSLog(@"%f", _rotateCube);
     // do stuff
     
